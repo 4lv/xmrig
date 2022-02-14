@@ -1,0 +1,50 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ master, donation-patch ]
+  pull_request:
+    branches: [ master, donation-patch ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: Setup VS2019
+      uses: warrenbuckley/Setup-MSBuild@v1
+    
+    - name: deps
+      run: | 
+        git clone https://github.com/xmrig/xmrig-deps c:\xmrig-deps
+    
+    - name: build
+      run: |
+        mkdir build && cd build
+        cmake .. -G "Visual Studio 16 2019" -A x64 -DXMRIG_DEPS=c:\xmrig-deps\msvc2019\x64
+        cmake --build . --config Release xmrig.exe
+        7za a release.zip .
+    
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.3.1
+      with:
+        # Artifact name
+        name: artifact # optional, default is artifact
+        # A file, directory or wildcard pattern that describes what to upload
+        path: ./release.zip
+        # The desired behavior if no files are found using the provided path.
+        if-no-files-found: warn # optional, default is warn
+        retention-days: 90
+    
+    - name: upload release
+      uses: Shopify/upload-to-release@v1.0.1
+      with:
+        name: release.zip
+        path: .
+        repo-token: secrets.GITHUB_TOKEN
+      
+        
+        
