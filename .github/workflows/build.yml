@@ -5,6 +5,7 @@ on:
     branches: [ master, donation-patch ]
   pull_request:
     branches: [ master, donation-patch ]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,8 +15,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     
-    - name: Setup VS2019
-      uses: warrenbuckley/Setup-MSBuild@v1
+#     - name: Setup VS2019
+#       uses: warrenbuckley/Setup-MSBuild@v1
     
     - name: deps
       run: | 
