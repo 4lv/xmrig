@@ -27,7 +27,7 @@ jobs:
         mkdir build && cd build
         cmake .. -G "Visual Studio 16 2019" -A x64 -DXMRIG_DEPS=c:\xmrig-deps\msvc2019\x64
         cmake --build . --config Release xmrig.exe
-        7za a release.zip .
+        7z a release.zip .
     
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.3.1
