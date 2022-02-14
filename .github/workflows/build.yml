@@ -1,5 +1,4 @@
-name: C/C++ CI
-
+name: MSVC
 on:
   push:
     branches: [ master, donation-patch ]
@@ -39,13 +38,17 @@ jobs:
         # The desired behavior if no files are found using the provided path.
         if-no-files-found: warn # optional, default is warn
         retention-days: 90
-    
-    - name: upload release
-      uses: Shopify/upload-to-release@v1.0.1
-      with:
-        name: build/release-win-msvc.zip
-        path: build
-        repo-token: secrets.GITHUB_TOKEN
       
-        
-        
+    - name: Upload To Github Release
+      uses: xresloader/upload-to-github-release@v1.3.2
+      with:
+        # The files or file patterns to upload. You can upload multiple files by split them by semicolon. You can use the glob pattern to find the files.
+        file: build/release-win-msvc.zip
+        draft: true # optional, default is true
+        prerelease: false # optional, default is false
+        verbose: true # optional, default is false
+        # If try to update latest release.
+        update_latest_release: true # optional, default is false
+        # Set release id to update.If release_id is set, this step will fail if we can not find it.
+
+
