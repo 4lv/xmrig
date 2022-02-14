@@ -35,7 +35,7 @@ jobs:
         # Artifact name
         name: artifact # optional, default is artifact
         # A file, directory or wildcard pattern that describes what to upload
-        path: ./release.zip
+        path: build/release.zip
         # The desired behavior if no files are found using the provided path.
         if-no-files-found: warn # optional, default is warn
         retention-days: 90
@@ -44,7 +44,7 @@ jobs:
       uses: Shopify/upload-to-release@v1.0.1
       with:
         name: release.zip
-        path: .
+        path: build
         repo-token: secrets.GITHUB_TOKEN
       
         
